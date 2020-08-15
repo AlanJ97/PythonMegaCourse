@@ -12,6 +12,10 @@ def search_word(word):
         word = word.lower()
         if word in data:
             searched_word = data[word]
+        elif word.title() in data:
+            searched_word = data[word.title()]
+        elif word.upper() in data: 
+            searched_word = data[word.upper()]
         elif len(get_close_matches(word, data.keys())) > 0:
             print( "Did you mean one of these options: {} ,  Which one? Or something different?".format(get_close_matches(word, data.keys())))
             right_word = "trying one more time"
