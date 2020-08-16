@@ -26,20 +26,29 @@ def search_word(word):
            """ % (word, word.title(), word.upper())
         )
         results = cursor.fetchall()
+        
         query_comparison = cursor.execute("SELECT Expression FROM Dictionary")
         results_comparison = cursor.fetchall()
+       
         if results:
             searched_word = results
-        
-        elif results_comparison:
-        
-            print (results_comparison)
-        # elif len(get_close_matches(word, results_comparison)) > 0:
-            print( "Did you mean one of these options: {} ,  Which one? Or something different?".format(get_close_matches(word, [item for item in results_comparison])))
+          
+        elif results_comparison:    
+            words_list = []
+            final_list = []
+            for field in results_comparison:
+                words_list.append(str(field))
+            for i in words_list:
+                final_list.append(i[2:-3])
+    
+            print( "Did you mean one of these options: {} ,  Which one? Or something different?".format(get_close_matches(word, [item for item in final_list])))
             right_word = "trying one more time"
-            while right_word not in data:
+            while right_word not in final_list:
                 right_word = input("Give me your right option, dude ")
-            return data[right_word]
+            
+            query_correct = cursor.execute("SELECT Definition FROM Dictionary WHERE Expression = '%s'" % right_word)
+            results_correct = cursor.fetchall()
+            return results_correct
         else:
             return "Your word does not exist in the records. Try with another"
 
