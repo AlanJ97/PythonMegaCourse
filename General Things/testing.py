@@ -1,10 +1,3 @@
-import time
-import os
-import pandas
-while True:
-    if os.path.exists("files/temps_today.csv"):
-        data = pandas.read_csv("files/temps_today.csv")
-        print(data.mean())
-    else:
-        print("File does not exist")
-    time.sleep(4)
+a= [('Gbanzili',), ('Dagaga',), ('Dagada',), ("Dagoda'",), ('Yatê',), ('find out',), ('switchboard',), ('caucus',), ('board,',), ('Comission',), ('inlay',), ('panelling',), ('casing',), ('facing',), ('lining',), ('assumption of Mary',), ('auscultation',)]
+for field in a:
+    print('{}'.format(field))
