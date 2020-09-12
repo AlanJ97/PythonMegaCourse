@@ -1,10 +1,10 @@
-import sqlite3
+import psycopg2 
 
 
 def crate_table():
-    conn = sqlite3.connect("lite.db")
+    conn = psycopg2.connect("dbname='mydatabase' user='alan' password='123456' host= 'localhost' port='5432'")
     cur = conn.cursor()
-    open_conn()
+
     cur.execute("""
         CREATE TABLE IF NOT EXISTS store(
             item TEXT,
@@ -16,13 +16,13 @@ def crate_table():
     conn.close()
 
 def insert_data(item, quantity, price):
-    conn = sqlite3.connect("lite.db")
+    conn = psycopg2.connect("dbname='mydatabase' user='alan' password='123456' host= 'localhost' port='5432'")
     cur = conn.cursor()
     cur.execute("""
         INSERT INTO store VALUES(
-            ?,
-            ?,
-            ?
+            %s,
+            %s,
+            %s
     )""",(item, quantity, price)
     )
     conn.commit()
@@ -31,7 +31,7 @@ def insert_data(item, quantity, price):
 #insert_data("Coca 2", 3, 5.64)
 
 def view():
-    conn = sqlite3.connect("lite.db")
+    conn = psycopg2.connect("dbname='mydatabase' user='alan' password='123456' host= 'localhost' port='5432'")
     cur=conn.cursor()
     cur.execute("SELECT * FROM store")
     rows = cur.fetchall()
@@ -39,19 +39,21 @@ def view():
     return rows
 
 def delete(item):
-    conn = sqlite3.connect("lite.db")
+    conn = psycopg2.connect("dbname='mydatabase' user='alan' password='123456' host= 'localhost' port='5432'")
     cur = conn.cursor()
-    cur.execute("DELETE FROM store WHERE item=?",(item,))
+    cur.execute("DELETE FROM store WHERE item= %s",(item,))
     conn.commit()
     conn.close()
 
 def update(quantity, price ,item):
-    conn = sqlite3.connect("lite.db")
+    conn = psycopg2.connect("dbname='mydatabase' user='alan' password='123456' host= 'localhost' port='5432'")
     cur = conn.cursor()
-    cur.execute("UPDATE store SET quantity=?, price=? WHERE item=?", (quantity, price ,item))
+    cur.execute("UPDATE store SET quantity=%s, price=%s WHERE item=%s", (quantity, price ,item))
     conn.commit()
     conn.close()
 
-#delete("Coca 2")
-update(11,11,"Coca")
+#delete("orange")
+update(11,11,"sabritas")
 print(view())
+#insert_data("orange",34,16)
+crate_table()
