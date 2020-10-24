@@ -41,3 +41,10 @@ html, body{
     background-color: darkgoldenrod;
     margin: 4px;
 }
+
+.message{
+    font-size: 30px;
+    color: white;
+    flood-color: springgreen;
+    border-top-color: saddlebrown;
+}
